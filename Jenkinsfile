@@ -21,28 +21,32 @@ pipeline {
                 }
             }
         }
-
+        
+        stage('Copy client.py to Machine') {
+            steps {
+                script {
+                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        sh "cp client.py /var/lib/jenkins/"
+                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        sh "cp server.py /var/lib/jenkins/"                        
+                    }
+                }
+            }
+        }
+        
         stage('Run Docker Container Locally') {
             steps {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "docker run -d --name netcalc netcalc"
                         // Verify the application is running
-                        sh "docker exec netcalc python3 /app/server.py --test-operation"
+                        sh "docker exec netcalc python3 /var/lib/jenkins/server.py --test-operation"
                     }
                 }
             }
         }
 
-        stage('Copy client.py to Machine') {
-            steps {
-                script {
-                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh "cp client.py /var/lib/jenkins/"
-                    }
-                }
-            }
-        }
+
     }
 
     post {
