@@ -7,7 +7,7 @@ pipeline {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         // Build Docker image locally
-                        sh "sudo docker build -t netcalc ."
+                        sh "docker build -t netcalc ."
                     }
                 }
             }
@@ -18,7 +18,7 @@ pipeline {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         // Tag Docker image locally
-                        sh "sudo docker tag netcalc netcalc:latest"
+                        sh "docker tag netcalc netcalc:latest"
                     }
                 }
             }
@@ -29,11 +29,11 @@ pipeline {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         // Run Docker container locally
-                        sh "sudo docker run -d --name netcalc netcalc"
+                        sh "docker run -d --name netcalc netcalc"
                     
                         // Verify the application is running
                         // For example, you might test a specific endpoint
-                        sh "sudo docker exec netcalc python3 /app/server.py --test-operation"
+                        sh "docker exec netcalc python3 /app/server.py --test-operation"
                     }
                 }
             }
