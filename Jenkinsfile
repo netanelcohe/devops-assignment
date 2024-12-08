@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        GITHUB_REPO = 'https://github.com/yourusername/yourrepo'  // Replace with your GitHub repo URL
-        DOCKER_IMAGE_NAME = "arithmetic-server"  // The name of your Docker image
+        GITHUB_REPO = 'https://github.com/netanelcohe/devops-assignment.git'
+        DOCKER_IMAGE_NAME = "netcalc" 
     }
 
     stages {
@@ -42,11 +42,11 @@ pipeline {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         // Run Docker container locally
-                        sh "docker run -d --name arithmetic-server $DOCKER_IMAGE_NAME"
+                        sh "docker run -d --name netcalc $DOCKER_IMAGE_NAME"
                     
                         // Verify the application is running
                         // For example, you might test a specific endpoint
-                        sh "docker exec arithmetic-server python3 /app/server.py --test-operation"
+                        sh "docker exec netcalc python3 /app/server.py --test-operation"
                     }
                 }
             }
