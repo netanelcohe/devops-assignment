@@ -38,7 +38,7 @@ pipeline {
             steps {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh "cp client.py /home/ubuntu/"
+                        sh "cp client.py /home/jenkins/"
                     }
                 }
             }
