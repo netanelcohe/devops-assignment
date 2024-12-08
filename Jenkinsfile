@@ -27,7 +27,6 @@ pipeline {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "cp client.py /var/lib/jenkins/"
-                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "cp server.py /var/lib/jenkins/"                        
                     }
                 }
