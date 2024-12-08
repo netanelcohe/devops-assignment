@@ -2,12 +2,12 @@
 __________________________________
 
 ## Creating a Jenkins server with TF
-On your local machine, make sure you've configure AWS CLI with creds
-Then, download the Terraform script and apply it for the infrastructure to be provisioned.
-As output, you'll get the EC2 instance public IP address which you can use to access the Jenkins server on port 8080 - IP_Address:8080
-To get the initial password, ssh into the EC2 with the provided dev-assign.pem key (user - ubuntu) and run the command:
-sudo cat /var/lib/jenkins/secrets/initialAdminPassword
-Now you can run through the initial setup, create user and pipelines
+1. On your local machine, make sure you've configure AWS CLI with creds
+2. Download the Terraform script and apply it for the infrastructure to be provisioned.
+3. As output, you'll get the EC2 instance public IP address which you can use to access the Jenkins server on port 8080 - IP_Address:8080
+4. To get the initial password, ssh into the EC2 with the provided dev-assign.pem key (user - ubuntu) and run the command:
+5. sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+6. Now you can run through the initial setup, create user and pipelines
 
 ## Creating the pipeline in Jenkins
 In the Dashboard, click on "New Item"
