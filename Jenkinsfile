@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh "docker run -d --name netcalc netcalc"
+                        sh "docker run -p 5000:5000 --name netcalc netcalc"
                         // Verify the application is running
                         sh "docker exec netcalc python3 /var/lib/jenkins/server.py --test-operation"
                     }
