@@ -1,26 +1,13 @@
 pipeline {
     agent any
 
-    environment {
-        GITHUB_REPO = 'https://github.com/netanelcohe/devops-assignment.git'
-        DOCKER_IMAGE_NAME = "netcalc" 
-    }
-
     stages {
-        stage('Clone GitHub Repo') {
-            steps {
-                script {
-                    git branch: 'main', url: env.GITHUB_REPO
-                }
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         // Build Docker image locally
-                        sh "docker build -t $DOCKER_IMAGE_NAME ."
+                        sh "docker build -t netcalc ."
                     }
                 }
             }
@@ -31,7 +18,7 @@ pipeline {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         // Tag Docker image locally
-                        sh "docker tag $DOCKER_IMAGE_NAME $DOCKER_IMAGE_NAME:latest"
+                        sh "docker tag netcalc netcalc:latest"
                     }
                 }
             }
@@ -42,7 +29,7 @@ pipeline {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         // Run Docker container locally
-                        sh "docker run -d --name netcalc $DOCKER_IMAGE_NAME"
+                        sh "docker run -d --name netcalc netcalc"
                     
                         // Verify the application is running
                         // For example, you might test a specific endpoint
