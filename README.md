@@ -10,19 +10,19 @@ __________________________________
 6. Now you can run through the initial setup, create user and pipelines
 
 ## Creating the pipeline in Jenkins
-In the Dashboard, click on "New Item"
-Provide a name and choode the "Pipeline" option
-Under Pipeline - from the drop-down list, choose "Pipelile script from SCM"
-As SCM - choose Git
-Repository URL - https://github.com/netanelcohe/devops-assignment.git
-Branch Specifier - */main
-Script path - Jenkinsfile
-Click "Save"
-Now you can build the pipeline.
-Check the build logs for failures
+1. In the Dashboard, click on "New Item"
+2. Provide a name and choode the "Pipeline" option
+3. Under Pipeline - from the drop-down list, choose "Pipelile script from SCM"
+     * As SCM - choose Git
+     * Repository URL - https://github.com/netanelcohe/devops-assignment.git
+     * Branch Specifier - */main
+     * Script path - Jenkinsfile
+     * Click "Save"
+4. Now you can build the pipeline.
+5. Check the build logs for failures
 
 ## Testing the app
-ssh into the EC2 with the provided dev-assign.pem key (user - ubuntu) 
-verify that the docker is running using "docker ps"
-Then, run the client script with: python3 /var/lib/jenkins/client.py
+1. ssh into the EC2 with the provided dev-assign.pem key (user - ubuntu) 
+2. verify that the docker is running using "docker ps"
+3. Then, run the client script with: python3 /var/lib/jenkins/client.py
 
