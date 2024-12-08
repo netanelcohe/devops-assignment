@@ -6,7 +6,6 @@ pipeline {
             steps {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        // Build Docker image locally
                         sh "docker build -t netcalc ."
                     }
                 }
@@ -17,7 +16,6 @@ pipeline {
             steps {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        // Tag Docker image locally
                         sh "docker tag netcalc netcalc:latest"
                     }
                 }
@@ -28,12 +26,19 @@ pipeline {
             steps {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        // Run Docker container locally
                         sh "docker run -d --name netcalc netcalc"
-                    
                         // Verify the application is running
-                        // For example, you might test a specific endpoint
                         sh "docker exec netcalc python3 /app/server.py --test-operation"
+                    }
+                }
+            }
+        }
+
+        stage('Copy client.py to Machine') {
+            steps {
+                script {
+                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        sh "cp client.py /home/ubuntu/"
                     }
                 }
             }
@@ -50,7 +55,6 @@ pipeline {
         failure {
             script {
                 echo "Build failed. Check Jenkins logs for details."
-                // Optionally send a notification or alert to the team about the failure
             }
         }
     }
