@@ -26,7 +26,7 @@ sudo apt-get install -y jenkins
 
 sudo systemctl enable jenkins
 sudo systemctl restart jenkins
-
+sudo usermod -aG docker jenkins
 public_ip=$(curl -s https://api.ipify.org)
 
 echo "A new Jenkins server is running on: $public_ip:8080"
