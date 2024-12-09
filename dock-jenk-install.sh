@@ -25,8 +25,8 @@ sudo apt-get install -y fontconfig openjdk-17-jre
 sudo apt-get install -y jenkins
 
 sudo systemctl enable jenkins
-sudo systemctl restart jenkins
 sudo usermod -aG docker jenkins
+sudo systemctl restart jenkins
 public_ip=$(curl -s https://api.ipify.org)
 
 echo "A new Jenkins server is running on: $public_ip:8080"
