@@ -12,14 +12,14 @@ resource "aws_security_group" "jenkins_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["192.116.190.26/32"] # Restrict to your IP for better security
+    cidr_blocks = ["192.116.190.26/32", "199.203.203.177/32"]
   }
 
   ingress {
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
-    cidr_blocks = ["192.116.190.26/32"] # Restrict to your IP for better security
+    cidr_blocks = ["192.116.190.26/32", "199.203.203.177/32"]
   }
 
   egress {
@@ -44,24 +44,7 @@ resource "aws_instance" "jenkins_instance" {
   }
 
   # User Data Script to Install and Configure Jenkins
-  user_data = <<-EOF
-    #!/bin/bash
-    
-    sudo apt update && sudo apt upgrade -y
-    
-    # Add Jenkins repository key 
-    sudo wget -O /usr/share/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
-    
-    # Add Jenkins repository to sources list
-    echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
-    
-    sudo apt-get update
-    sudo apt-get install -y fontconfig openjdk-17-jre
-    sudo apt-get install -y jenkins
-    
-    sudo systemctl enable jenkins
-    sudo systemctl restart jenkins
-    EOF
+  user_data = file("dock-jenk-install.sh")
 }
 # Output the Public IP Address
 output "jenkins_public_ip" {
