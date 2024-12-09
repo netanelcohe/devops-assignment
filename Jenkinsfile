@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh "docker tag netcalc netcalcrepo1/netcalc:latest"
+                        sh "docker tag netcalc $DOCKERHUB_CREDENTIALS_USR/netcalc:latest"
                     }
                 }
             }
@@ -33,7 +33,7 @@ pipeline {
         
         stage('Push') {
             steps {
-                sh 'docker push netcalcrepo1/netcalc:latest'
+                sh 'docker push $DOCKERHUB_CREDENTIALS_USR/netcalc:latest'
             }
         }
         
