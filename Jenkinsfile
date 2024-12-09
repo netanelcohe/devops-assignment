@@ -7,6 +7,7 @@ pipeline {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "docker build -t netcalc ."
+                        sh "whoami"
                     }
                 }
             }
