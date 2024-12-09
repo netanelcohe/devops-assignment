@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    environment {
+        DOCKER_CREDENTIALS = credentials('47767690-23d8-4f5e-b384-7c3bf19e82c7')
+    }
     stages {
         stage('Build Docker Image') {
             steps {
@@ -18,6 +20,18 @@ pipeline {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "docker tag netcalc netcalc:latest"
+                    }
+                }
+            }
+        }
+
+        stage('Push Docker Image to Docker Hub') {
+            steps {
+                script {
+                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS) {
+                            docker.image('netcalc:latest').push()
+                        }
                     }
                 }
             }
