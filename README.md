@@ -6,8 +6,10 @@ __________________________________
 2. **Download the Terraform script** and apply it to provision the infrastructure.
 3. **As output**, you'll get the EC2 instance’s public IP address. Use this IP to access the Jenkins server on port 8080: `IP_Address:8080`.
 4. **To get the initial password**
-     * SSH into the EC2 instance using the provided `dev-assign.pem` key (user: `ubuntu`): `ssh -i /path/to/dev-assign.pem ubuntu@IP_Address`
-     * `sudo cat /var/lib/jenkins/secrets/initialAdminPassword`
+     * SSH into the EC2 instance using the provided `dev-assign.pem` key (user: `ubuntu`): 
+       `ssh -i /path/to/dev-assign.pem ubuntu@IP_Address`
+     * Extract the password:
+       `sudo cat /var/lib/jenkins/secrets/initialAdminPassword`
 7. Now you can run through the initial setup, create user and pipelines
 
 ## Creating the pipeline in Jenkins
