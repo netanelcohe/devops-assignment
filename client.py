@@ -5,21 +5,38 @@ def main():
     server_port = 5000
 
     print("Welcome to the Arithmetic Client!")
-    print("Available operations: add, subtract, multiply, divide")
-    
+    print("Available operations:")
+    print("1. Add")
+    print("2. Subtract")
+    print("3. Multiply")
+    print("4. Divide")
+
+    operations_map = {
+        "1": "add",
+        "2": "subtract",
+        "3": "multiply",
+        "4": "divide"
+    }
+
     while True:
-        operation = input("Enter operation (or 'exit' to quit): ").strip()
-        if operation.lower() == "exit":
+        operation_choice = input("Enter the number corresponding to the operation (or 'exit' to quit): ").strip()
+        if operation_choice.lower() == "exit":
             print("Exiting. Goodbye!")
             break
-        
+
+        if operation_choice not in operations_map:
+            print("Invalid choice. Please select a number between 1 and 4.")
+            continue
+
         try:
             num1 = float(input("Enter the first number: "))
             num2 = float(input("Enter the second number: "))
         except ValueError:
             print("Invalid input. Please enter numeric values.")
             continue
-        
+
+        operation = operations_map[operation_choice]
+
         # Send request to server
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
             try:
@@ -34,4 +51,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
