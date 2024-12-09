@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        DOCKER_CREDENTIALS = credentials('47767690-23d8-4f5e-b384-7c3bf19e82c7')
+        DOCKER_TOKEN = credentials('47767690-23d8-4f5e-b384-7c3bf19e82c7')  // Jenkins credential ID for Docker Hub token
     }
     stages {
         stage('Build Docker Image') {
@@ -9,7 +9,6 @@ pipeline {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "docker build -t netcalc ."
-                        sh "whoami"  // This command can be removed; it's not necessary
                     }
                 }
             }
@@ -29,8 +28,10 @@ pipeline {
             steps {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        withCredentials([string(credentialsId: '47767690-23d8-4f5e-b384-7c3bf19e82c7', variable: 'DOCKER_PASSWORD')]) {
-                            docker.withRegistry('https://index.docker.io/v1/', [usernamePassword(credentialsId: '47767690-23d8-4f5e-b384-7c3bf19e82c7', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        withCredentials([string(credentialsId: '47767690-23d8-4f5e-b384-7c3bf19e82c7', variable: 'DOCKER_TOKEN')]) {
+                            docker.withRegistry('https://index.docker.io/v1/', [
+                                'DOCKER_AUTH_TOKEN': DOCKER_TOKEN
+                            ]) {
                                 docker.image('netcalc:latest').push()
                             }
                         }
