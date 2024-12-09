@@ -1,10 +1,6 @@
 pipeline {
     agent any
-    environment {
-        registry = "netanelcc/de-da"
-        registryCredential = '47767690-23d8-4f5e-b384-7c3bf19e82c7'
-        dockerImage = ''
-    }
+
     stages {
         stage('Build Docker Image') {
             steps {
@@ -12,7 +8,6 @@ pipeline {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "docker build -t netcalc ."
                         sh "whoami"
-                        dockerImage = docker.build registry + ":$BUILD_NUMBER"
                     }
                 }
             }
@@ -23,16 +18,6 @@ pipeline {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "docker tag netcalc netcalc:latest"
-                    }
-                }
-            }
-        }
-
-        stage('Push Docker Image to Docker Hub') {
-            steps {
-                script {
-                    docker.withRegistry( '', registryCredential ) {
-                    dockerImage.push()
                     }
                 }
             }
