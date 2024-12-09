@@ -33,7 +33,7 @@ pipeline {
         
         stage('Push') {
             steps {
-                sh 'docker push 'netanelcc/netcalc:latest'
+                sh 'docker push netanelcc/netcalc:latest'
             }
         }
         
