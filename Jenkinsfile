@@ -42,7 +42,7 @@ pipeline {
             steps {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh "docker run -d -p 5000:5000 --name netcalc netcalc"
+                        sh "docker run -d -p 5000:5000 --name netcalc $DOCKERHUB_CREDENTIALS_USR/netcalc:latest"
                     }
                 }
             }
