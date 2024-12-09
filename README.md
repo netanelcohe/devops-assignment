@@ -15,15 +15,25 @@ __________________________________
 5. Now you can run through the initial setup, create user and pipelines
 
 ## Creating the pipeline in Jenkins
-1. In the Dashboard, click on "New Item"
-2. Provide a name and choose the "Pipeline" option
-3. Under Pipeline - from the drop-down list, choose "Pipelile script from SCM"
-     * **As SCM** - choose Git
-     * **Repository URL** - `https://github.com/netanelcohe/devops-assignment.git`
-     * **Branch Specifier** - `*/main`
-     * **Script path** - `Jenkinsfile`
-     * Click "Save"
-4. Now you can build the pipeline.
+1. First, to push the image into your Dockerhub repository, add your credentials to Jenkins:
+     * In the dashboard, click on Manage Jenkins
+     * Then, Credentials
+     * Click on "global"
+     * Add credentials
+     * Add your docker hub credentials (username-password)
+     * ID: dockerhub-crd
+     * Click on "Create"
+
+3. Next, prepare the pipeline:
+     * In the Dashboard, click on **New Item**
+     * Provide a name and choose the **Pipeline** option
+     * Under Pipeline - from the drop-down list, choose **Pipelile script from SCM**
+     * As SCM - choose **Git**
+     * Repository URL - `https://github.com/netanelcohe/devops-assignment.git`
+     * Branch Specifier - `*/main`
+     * Script path - `Jenkinsfile`
+     * Click **Save**
+4. Now, you can build the pipeline.
 5. Check the build logs for failures to diagnose any issues.
 
 ## Testing the app
