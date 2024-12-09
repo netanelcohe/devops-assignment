@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('netanelcc-dockerhub')
+    }
     stages {
         stage('Build Docker Image') {
             steps {
@@ -20,6 +22,18 @@ pipeline {
                         sh "docker tag netcalc netcalc:latest"
                     }
                 }
+            }
+        }
+        
+        stage('Login') {
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+        
+        stage('Push') {
+            steps {
+                sh 'docker push 'netanelcc/netcalc:latest'
             }
         }
         
