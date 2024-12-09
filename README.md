@@ -9,7 +9,7 @@ __________________________________
      * SSH into the EC2 instance using the provided `dev-assign.pem` key (user: `ubuntu`): 
        `ssh -i /path/to/dev-assign.pem ubuntu@IP_Address`
      * Wait for 5 minutes for the Jenkins and Docker installation to complete, to follow up on the installation process, use:
-       `sudo less +F `/var/log/cloud-init-output.log`
+       `sudo less +F /var/log/cloud-init-output.log`
      * Extract the password:
        `sudo cat /var/lib/jenkins/secrets/initialAdminPassword`
 5. Now you can run through the initial setup, create user and pipelines
