@@ -1,7 +1,9 @@
 pipeline {
     agent any
     environment {
-        DOCKER_TOKEN = credentials('47767690-23d8-4f5e-b384-7c3bf19e82c7')  // Jenkins credential ID for Docker Hub token
+        registry = "netanelcc/de-da"
+        registryCredential = '47767690-23d8-4f5e-b384-7c3bf19e82c7'
+        dockerImage = ''
     }
     stages {
         stage('Build Docker Image') {
@@ -9,6 +11,8 @@ pipeline {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "docker build -t netcalc ."
+                        sh "whoami"
+                        dockerImage = docker.build registry + ":$BUILD_NUMBER"
                     }
                 }
             }
@@ -27,30 +31,24 @@ pipeline {
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
-                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        withCredentials([string(credentialsId: '47767690-23d8-4f5e-b384-7c3bf19e82c7', variable: 'DOCKER_TOKEN')]) {
-                            docker.withRegistry('https://index.docker.io/v1/', [
-                                'DOCKER_AUTH_TOKEN': DOCKER_TOKEN
-                            ]) {
-                                docker.image('netcalc:latest').push()
-                            }
-                        }
+                    docker.withRegistry( '', registryCredential ) {
+                    dockerImage.push()
                     }
                 }
             }
         }
-
+        
         stage('Copy client.py to Machine') {
             steps {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "cp client.py /var/lib/jenkins/"
-                        sh "cp server.py /var/lib/jenkins/"
+                        sh "cp server.py /var/lib/jenkins/"                        
                     }
                 }
             }
         }
-
+        
         stage('Run Docker Container Locally') {
             steps {
                 script {
@@ -60,6 +58,8 @@ pipeline {
                 }
             }
         }
+
+
     }
 
     post {
