@@ -8,18 +8,8 @@ pipeline {
             steps {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh "docker build -t netcalc ."
+                        sh "docker build -t $DOCKERHUB_CREDENTIALS_USR/netcalc:latest ."
                         sh "whoami"
-                    }
-                }
-            }
-        }
-
-        stage('Tag Docker Image') {
-            steps {
-                script {
-                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh "docker tag netcalc $DOCKERHUB_CREDENTIALS_USR/netcalc:latest"
                     }
                 }
             }
