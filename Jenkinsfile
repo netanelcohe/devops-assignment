@@ -9,7 +9,7 @@ pipeline {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "docker build -t netcalc ."
-                        sh "whoami"
+                        sh "whoami"  // This command can be removed; it's not necessary
                     }
                 }
             }
@@ -29,25 +29,27 @@ pipeline {
             steps {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS) {
-                            docker.image('netcalc:latest').push()
+                        withCredentials([string(credentialsId: '47767690-23d8-4f5e-b384-7c3bf19e82c7', variable: 'DOCKER_PASSWORD')]) {
+                            docker.withRegistry('https://index.docker.io/v1/', [usernamePassword(credentialsId: '47767690-23d8-4f5e-b384-7c3bf19e82c7', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                                docker.image('netcalc:latest').push()
+                            }
                         }
                     }
                 }
             }
         }
-        
+
         stage('Copy client.py to Machine') {
             steps {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "cp client.py /var/lib/jenkins/"
-                        sh "cp server.py /var/lib/jenkins/"                        
+                        sh "cp server.py /var/lib/jenkins/"
                     }
                 }
             }
         }
-        
+
         stage('Run Docker Container Locally') {
             steps {
                 script {
@@ -57,8 +59,6 @@ pipeline {
                 }
             }
         }
-
-
     }
 
     post {
