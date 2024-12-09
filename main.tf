@@ -40,7 +40,7 @@ resource "aws_instance" "jenkins_instance" {
   security_groups = [aws_security_group.jenkins_sg.name]
 
   tags = {
-    Name = "Jenkins-Test-with-code"
+    Name = "Jenkins-Server"
   }
 
   # User Data Script to Install and Configure Jenkins
