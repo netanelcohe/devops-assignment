@@ -16,7 +16,7 @@ __________________________________
 
 ## Creating the pipeline in Jenkins
 1. In the Dashboard, click on "New Item"
-2. Provide a name and choode the "Pipeline" option
+2. Provide a name and choose the "Pipeline" option
 3. Under Pipeline - from the drop-down list, choose "Pipelile script from SCM"
      * **As SCM** - choose Git
      * **Repository URL** - `https://github.com/netanelcohe/devops-assignment.git`
