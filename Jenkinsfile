@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('netanelcc-dockerhub')
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-crd')
     }
     stages {
         stage('Build Docker Image') {
