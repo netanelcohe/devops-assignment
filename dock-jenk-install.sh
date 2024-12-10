@@ -1,5 +1,9 @@
 #!/bin/bash
-# Set up Docker's apt repository
+
+###################################
+######  Docker installation #######
+###################################
+
 sudo apt-get update
 sudo apt-get install -y ca-certificates curl
 sudo install -m 0755 -d /etc/apt/keyrings
@@ -10,8 +14,13 @@ echo \
 $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
 sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
-# install the latest version
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+
+####################################
+######  Jenkins installation #######
+####################################
+
 sudo apt update && sudo apt upgrade -y
 
 # Add Jenkins repository key 
