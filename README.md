@@ -21,7 +21,7 @@ __________________________________
      * Click on "global"
      * Add credentials
      * Add your docker hub credentials (username-password)
-     * ID: dockerhub-crd
+     * ID: `dockerhub-crd`
      * Click on "Create"
 
 3. Next, prepare the pipeline:
