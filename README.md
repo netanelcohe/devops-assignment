@@ -3,7 +3,7 @@ __________________________________
 
 ## Creating a Jenkins Server with Terraform
 1. **On your local machine**, make sure you've configured AWS CLI with your credentials.
-2. **Download the Terraform script** and apply it to provision the infrastructure.
+2. **Download the entire repository as Zip** extract it and run apply the Terraform script to provision the infrastructure.
 3. **As output**, you'll get the EC2 instance’s public IP address. Use this IP to access the Jenkins server on port 8080: `IP_Address:8080`.
 4. **To get the initial password**
      * SSH into the EC2 instance using the provided `dev-assign.pem` key (user: `ubuntu`): 
