@@ -9,12 +9,6 @@ LABEL description="A Dockerized Arithmetic Python Server-Client Application"
 # Set a dedicated working directory
 WORKDIR /
 
-# Copy only the requirements file to leverage Docker caching
-# COPY requirements.txt .
-
-# Install dependencies efficiently
-# RUN pip install --no-cache-dir -r requirements.txt
-
 # Copy only the necessary files into the image
 COPY server.py ./
 
