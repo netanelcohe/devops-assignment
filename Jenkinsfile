@@ -1,9 +1,11 @@
 pipeline {
     agent any
+    // define environment variable to handle dockerhub credentials
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-crd')
     }
     stages {
+        // build the docker image locally on the Jenkins server
         stage('Build Docker Image') {
             steps {
                 script {
@@ -16,13 +18,19 @@ pipeline {
         
         stage('Login') {
             steps {
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                script {
+                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                      
+                }      
             }
         }
         
         stage('Push') {
             steps {
-                sh 'docker push $DOCKERHUB_CREDENTIALS_USR/netcalc:latest'
+                script {
+                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        sh 'docker push $DOCKERHUB_CREDENTIALS_USR/netcalc:latest'                       
+                }  
             }
         }
         
