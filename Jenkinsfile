@@ -9,7 +9,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                         sh "docker build -t $DOCKERHUB_CREDENTIALS_USR/netcalc:latest ."
                     }
                 }
