@@ -30,22 +30,26 @@ class Division(ArithmeticOperation):
 # Server logic
 def start_server():
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
+    # Define the socker properties
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind(("0.0.0.0", 5000))
     server_socket.listen(5)  # Maximum 5 connections
     logging.info("Server started and listening on port 5000")
 
+    # Possible operations
     operations = {
         "add": Addition(),
         "subtract": Subtraction(),
         "multiply": Multiplication(),
         "divide": Division(),
     }
-
+    
     while True:
+        # Accept the connection from the client
         client_socket, client_address = server_socket.accept()
         logging.info(f"Connection established with {client_address}")
-        
+
+        # Decode the data
         data = client_socket.recv(1024).decode()
         if not data:
             break
@@ -61,7 +65,8 @@ def start_server():
                 result = "Error: Unsupported operation"
         except Exception as e:
             result = f"Error: {str(e)}"
-        
+
+        # Log and return the result/error to the client
         logging.info(f"Received: {data} | Result: {result}")
         client_socket.send(str(result).encode())
         client_socket.close()
