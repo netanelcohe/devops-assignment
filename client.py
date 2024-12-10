@@ -1,9 +1,11 @@
 import socket
 
 def main():
-    server_ip = "127.0.0.1"  # Change to the server's IP if running remotely
+    # Define the server properties
+    server_ip = "127.0.0.1" 
     server_port = 5000
 
+    # build a prompt to accept the numbers and operation
     print("Welcome to the Arithmetic Client!")
     print("Available operations:")
     print("1. Add")
