@@ -20,7 +20,8 @@ pipeline {
             steps {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                      
+                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'  
+                    }                    
                 }      
             }
         }
@@ -29,7 +30,8 @@ pipeline {
             steps {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh 'docker push $DOCKERHUB_CREDENTIALS_USR/netcalc:latest'                       
+                        sh 'docker push $DOCKERHUB_CREDENTIALS_USR/netcalc:latest'  
+                    }                     
                 }  
             }
         }
@@ -54,8 +56,6 @@ pipeline {
                 }
             }
         }
-
-
     }
 
     post {
